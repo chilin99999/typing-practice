@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   'extends': [
     'plugin:vue/essential',
-    'eslint:recommended'
+    'eslint:recommended',
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -13,7 +13,7 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'indent': [
       'error', 2, {
-        'SwitchCase': 1
+        'SwitchCase': 1,
       },
     ],
     'quotes': ['error', 'single'],
@@ -21,8 +21,8 @@ module.exports = {
     'object-shorthand': ['error', 'always'],
     'valid-jsdoc': [
       'error', {
-        'requireReturn': false
-      }
+        'requireReturn': false,
+      },
     ],
     'require-jsdoc': [
       'error', {
@@ -31,25 +31,25 @@ module.exports = {
           'ArrowFunctionExpression': true,
           'MethodDefinition': false,
           'ClassDeclaration': false,
-          'FunctionExpression': false
-        }
-      }
+          'FunctionExpression': false,
+        },
+      },
     ],
     'semi': ['error', 'always'],
     'no-empty': 'error',
-    'no-empty-function': 'error'
+    'no-empty-function': 'error',
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)'
+        '**/__tests__/*.{j,t}s?(x)',
       ],
       env: {
-        mocha: true
-      }
-    }
-  ]
-}
+        mocha: true,
+      },
+    },
+  ],
+};
