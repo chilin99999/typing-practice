@@ -203,7 +203,7 @@ export default {
       return;
     }
     if(this.mode == 'sentence') {
-      this.sentences = this.topic.content.split(/(?<=。)/g);
+      this.sentences = this.topic.content.split(/(?<=\n)/g).filter(d => d.trim());
     }
     else {
       this.paragraph = this.topic.content;
