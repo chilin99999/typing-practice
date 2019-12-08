@@ -8,12 +8,14 @@ export default new Vuex.Store({
     topic: null,
     time: null,
     speekSpeedRate: 1,
+    mode: 'sentence', // sentence or paragraph
   },
   mutations: {
-    set(state, { topic, time, speekSpeedRate }) {
+    set(state, { topic, time, speekSpeedRate, mode }) {
       state.topic = topic;
       state.time = time;
       state.speekSpeedRate = speekSpeedRate;
+      state.mode = mode;
     },
   },
   actions: {

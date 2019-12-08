@@ -12,6 +12,10 @@
           </Select>
           測驗時間：(分)<InputNumber v-model="settingTime" prefix="md-alarm" :min="1" :step="1" placeholder="請輸入測驗時間(分)" class="margin-y-8 full-width align-center" />
           講話速度：<InputNumber :max="3" :min="0.2" :step="0.2" v-model="speekSpeedRate" class="margin-y-8 full-width align-center"></InputNumber>
+          模式：<Select v-model="mode">
+            <Option value="sentence">句子</Option>
+            <Option value="paragraph">段落</Option>
+          </Select>
           <Button type="primary" class="margin-y-24" @click="set">確定</Button>
         </div>
       </div>
@@ -51,6 +55,7 @@ export default {
       selectedTopicTitle: topics[0].title,
       settingTime: 3,
       speekSpeedRate: 1,
+      mode: 'sentence',
       last10recordsColumns: [
         { title: '日期', key: 'timeText' },
         { title: '打字速度(字/分)', key: 'typeSpeed' },
@@ -73,6 +78,7 @@ export default {
         topic,
         time: this.settingTime,
         speekSpeedRate: this.speekSpeedRate,
+        mode: this.mode,
       });
       this.$router.push('/game');
     },

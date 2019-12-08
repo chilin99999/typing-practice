@@ -51,6 +51,7 @@ export default {
       isGameOverModalShow: false,
       isStart: false,
       sentences: [],
+      paragraph: '',
       sentenceBlocks: [],
       remainingSec: 0,
       answer: '',
@@ -70,8 +71,11 @@ export default {
     speekSpeedRate() {
       return this.$store.state.speekSpeedRate;
     },
+    mode() {
+      return this.$store.state.mode;
+    },
     sentence() {
-      return this.sentences[0];
+      return this.sentences && this.sentences[0] || this.paragraph;
     },
     showTimeText() {
       const minutes = Math.floor(this.remainingSec / 60);
@@ -199,7 +203,12 @@ export default {
       this.$router.push('/');
       return;
     }
-    this.sentences = this.topic.content.split(/(?<=。)/g);
+    if(this.mode == 'sentence') {
+      this.sentences = this.topic.content.split(/(?<=。)/g);
+    }
+    else {
+      this.paragraph = this.topic.content;
+    }
     this.setSentence(true);
     this.remainingSec = this.time * 60;
   },
