@@ -167,7 +167,7 @@ export default {
       };
 
       const last10records = JSON.parse(localStorage.getItem('last10records')) || [];
-      const top10records = JSON.parse(localStorage.getItem('top10Records')) || [];
+      const top10records = JSON.parse(localStorage.getItem('top10records')) || [];
       if(last10records.length == 10) {
         last10records.pop();
       }
