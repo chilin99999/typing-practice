@@ -13,8 +13,8 @@
           <span v-for="(item, index) in sentenceBlocks" :key="index"
             :class="{ red: item.state == 'wrong', blue: item.state == 'correct' }">{{item.text}}</span>
           
-          <Input v-model="answer" type="text" :autosize="{minRows: 6,maxRows: 10}"
-            @on-change="judgeAnswer" @on-enter="next" />
+          <Input v-model="answer" type="textarea" :autosize="{minRows: 6,maxRows: 10}"
+            @on-change="judgeAnswer" @on-enter="next" autofocus />
         </div>
         <Button v-if="!isStart" @click="start" type="primary">開始作答</Button>
       </div>
@@ -28,8 +28,9 @@
       <p>答對率：{{correctRate}} %</p>
       <p>設定時間：{{time}}分</p>
       <p>剩餘時間：{{showTimeText}}</p>
+      <p>打字速度：{{typeSpeed}}字/分</p>
       <div slot="footer">
-        <Button type="primary" size="large" long @click="isGameOverModalShow=false">確定</Button>
+        <Button type="primary" size="large" long @click="goBack">確定</Button>
       </div>
     </Modal>
   </div>
@@ -56,6 +57,7 @@ export default {
       correctTextCount: 0,
       wrongTextCount: 0,
       spentTimeText: '',
+      typeSpeed: 0,
     };
   },
   computed: {
@@ -154,12 +156,42 @@ export default {
         };
       });
     },
+    setHistoryRecord() {
+      const record = {
+        typeSpeed: this.typeSpeed,
+        correctTextCount: this.correctTextCount,
+        timestamp: Date.now(),
+      };
+
+      const last10records = JSON.parse(localStorage.getItem('last10records')) || [];
+      const top10records = JSON.parse(localStorage.getItem('top10Records')) || [];
+      if(last10records.length == 10) {
+        last10records.pop();
+      }
+      last10records.unshift(record);
+
+      top10records.push(record);
+      top10records.sort((a, b) => b.typeSpeed - a.typeSpeed);
+      if(top10records.length == 10) {
+        top10records.pop();
+      }
+
+      localStorage.setItem('last10records', JSON.stringify(last10records));
+      localStorage.setItem('top10records', JSON.stringify(top10records));
+    },
     gameOverService() {
       this.isStart = false;
       this.isGameOverModalShow = true;
       clearInterval(this.timer);
       this.timer = null;
       window.speechSynthesis.cancel();
+
+      const spentMinute = ((this.time * 60) - this.remainingSec) / 60;
+      this.typeSpeed = Math.round(this.correctTextCount / spentMinute * 100) / 100;
+      this.setHistoryRecord();
+    },
+    goBack() {
+      this.$router.push('/');
     },
   },
   created() {
