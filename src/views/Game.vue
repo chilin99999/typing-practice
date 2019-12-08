@@ -107,15 +107,14 @@ export default {
       }
     },
     countCorrectRate() {
-      this.answer.split('').forEach((text, index) => {
-        const topicBlock = this.sentenceBlocks[index];
-        if(topicBlock) {
-          if(topicBlock.text == text) {
-            this.correctTextCount += 1;
-          }
-          else {
-            this.wrongTextCount += 1;
-          }
+      const answerBlocks = this.answer.split('');
+      this.sentenceBlocks.forEach(({text}, index) => {
+        const answer = answerBlocks[index];
+        if(answer && text == answer) {
+          this.correctTextCount += 1;
+        }
+        else {
+          this.wrongTextCount += 1;
         }
       });
     },
