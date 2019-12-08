@@ -214,6 +214,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.timer);
     this.timer = null;
+    window.speechSynthesis.cancel();
   },
 };
 </script>
